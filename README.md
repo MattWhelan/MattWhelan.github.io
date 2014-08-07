@@ -1,4 +1,4 @@
 mattwhelan.github.io
 ====================
 
-[[/teatimer.html][teatimer]
+[Tea Timer](http://mattwhelan.github.io/teatimer.html)
