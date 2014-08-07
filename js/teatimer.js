@@ -11,7 +11,7 @@ $(function(){
       $("#timeLeft").text("T - " + remaining + "s");
     } else {
       var elapsed = 1000 * (Date.now() - start);
-      $("#timeLeft").text("elapsed:  " + remaining + "s");
+      $("#timeLeft").text("elapsed:  " + elapsed + "s");
     }
   }
 
