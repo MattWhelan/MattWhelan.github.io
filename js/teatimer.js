@@ -18,7 +18,7 @@ $(function(){
       $title = $("title");
       $title.text($title.text() + " - Done");
       if (notifyAllowed) {
-        new Notification("Tea is done.");
+        new Notification("Tea is ready.");
       }
   }
 
@@ -36,13 +36,18 @@ $(function(){
     }
   }
 
-  var updateInterval = setInterval(update, INTERVAL);
+  var updateInterval = setInterval(update, INTERVAL),
+    doneTimeout;
 
   $("#go").click(function(){
     var duration = parseInt($("#duration").val(), 10);
     stop = duration * 1000 * 60 + start;
 
-    setTimeout(function(){
+    if (doneTimeout) {
+      clearTimeout(doneTimeout);
+    }
+
+    doneTimeout = setTimeout(function(){
       clearInterval(updateInterval);
       notify();
     }, stop - Date.now());
