@@ -18,7 +18,9 @@ $(function(){
       $title = $("title");
       $title.text($title.text() + " - Done");
       if (notifyAllowed) {
-        new Notification("Tea is ready.");
+        new Notification("Tea is ready.", {
+          icon: $("#icon").attr("href")
+        });
       }
   }
 
