@@ -14,4 +14,14 @@ $(function(){
       $("#timeLeft").text("elapsed:  " + remaining + "s");
     }
   }
+
+  $("#duration").change(function(){
+    var duration = parseInt($(this).val(), 10);
+    stop = duration * 1000 + start;
+
+    setTimeout(function(){
+      clearInterval(updateInterval);
+      $("#timeLeft").text("Done.");
+    });
+  });
 });
