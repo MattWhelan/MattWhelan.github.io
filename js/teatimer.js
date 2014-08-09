@@ -3,13 +3,21 @@ $(function(){
   var start = Date.now(),
     stop;
 
+  //Turns seconds into m:ss
+  function timeString(val){
+    var sec = val % 60;
+    var min = (val - sec) / 60;
+    var text = min + (sec < 10 ? ":0" :  ":") + sec;
+    return text;
+  }
+    
   function update(){
     if (stop != null) {
       var remaining = Math.round((stop - Date.now())/1000);
-      $("#timeLeft").text("T - " + remaining + "s");
+      $("#timeLeft").text("T - " + timeString(remaining));
     } else {
       var elapsed = Math.round((Date.now() - start)/1000);
-      $("#timeLeft").text("elapsed:  " + elapsed + "s");
+      $("#timeLeft").text("elapsed:  " + timeString(elapsed));
     }
   }
 
@@ -53,5 +61,14 @@ $(function(){
       clearInterval(updateInterval);
       notify();
     }, stop - Date.now());
+
+    update();
   });
+
+  $("#duration").on("input", function(){
+    var val = parseFloat($(this).val());
+    val *= 60;
+    $("#durationDisplay").text(timeString(val));
+  });
+
 });
