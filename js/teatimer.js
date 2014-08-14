@@ -38,10 +38,14 @@ $(function(){
     if (Notification.permission === "granted") {
       notifyAllowed = true;
     } else if (Notification.permission !== 'denied') {
-      Notification.requestPermission(function (permission) {
-        if(permission == "granted") {
-          notifyAllowed = true;
-        }
+      $('<button type="button" id="requestNotify">Enable Notification</button>').appendTo("body").click(function(ev){
+        ev.preventDefault();
+        Notification.requestPermission(function (permission) {
+          if(permission == "granted") {
+            notifyAllowed = true;
+            $("#requestNotify").remove();
+          }
+        });
       });
     }
   }
