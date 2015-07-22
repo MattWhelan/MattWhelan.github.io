@@ -54,7 +54,7 @@ $(function(){
     doneTimeout;
 
   $("#go").click(function(){
-    var duration = parseInt($("#duration").val(), 10);
+    var duration = parseFloat($("#duration").val());
     stop = duration * 1000 * 60 + start;
 
     if (doneTimeout) {
