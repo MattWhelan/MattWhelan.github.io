@@ -50,24 +50,43 @@ $(function(){
     }
   }
 
+  function stopAt(stopTime) {
+	$("#reset").show();
+    stop = stopTime;
+    if (doneTimeout) {
+      clearTimeout(doneTimeout);
+    }
+	localStorage.setItem("stop", stop);
+
+    doneTimeout = setTimeout(function(){
+	  $("#reset").hide();
+      clearInterval(updateInterval);
+	  localStorage.removeItem("stop");
+      notify();
+    }, Math.max(0, stop - Date.now()));
+
+    update();
+  }
+
+  function reset() {
+    start = Date.now();
+	stop = null;
+	localStorage.removeItem("stop");
+    if (doneTimeout) {
+      clearTimeout(doneTimeout);
+    }
+  }
+
   var updateInterval = setInterval(update, INTERVAL),
     doneTimeout;
 
   $("#go").click(function(){
     var duration = parseFloat($("#duration").val());
-    stop = duration * 1000 * 60 + start;
-
-    if (doneTimeout) {
-      clearTimeout(doneTimeout);
-    }
-
-    doneTimeout = setTimeout(function(){
-      clearInterval(updateInterval);
-      notify();
-    }, stop - Date.now());
-
-    update();
+    var stop = duration * 1000 * 60 + start;
+    stopAt(stop);
   });
+
+  $("#reset").click(reset);
 
   $("#duration").on("input", function(){
     var val = parseFloat($(this).val());
@@ -75,4 +94,14 @@ $(function(){
     $("#durationDisplay").text(timeString(val));
   });
 
+
+  //Check for saved stop time, so the timer survives reloads.
+  function restoreTimer(){
+    var savedStop = localStorage.getItem("stop");
+	if(savedStop){ 
+		stopAt(savedStop);
+	}
+  }
+
+  restoreTimer();
 });
