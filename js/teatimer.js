@@ -27,7 +27,8 @@ $(function(){
       $title.text($title.text() + " - Done");
       if (notifyAllowed) {
         new Notification("Tea is ready.", {
-          icon: $("#icon").attr("href")
+          icon: $("#icon").attr("href"),
+		  requireInteraction: true
         });
       }
   }
